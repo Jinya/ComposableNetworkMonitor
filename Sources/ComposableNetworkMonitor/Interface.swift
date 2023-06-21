@@ -2,13 +2,12 @@ import Foundation
 import Network
 
 @available(macOS 11.0, iOS 14.2, watchOS 7.1, tvOS 14.2, *)
-struct ComposableNetworkMonitor {
+public struct ComposableNetworkMonitor {
   public var currentPath: @Sendable () -> Path
   public var observer: @Sendable () -> AsyncStream<Path>
 
   public struct Path: Equatable {
     public var status: Status
-    
     public var unsatisfiedReason: UnsatisfiedReason
     
     public init(
@@ -36,14 +35,14 @@ struct ComposableNetworkMonitor {
 }
 
 extension ComposableNetworkMonitor.Path {
-  public init(rawValue: NWPath) {
+  init(rawValue: NWPath) {
     self.status = .init(rawValue: rawValue.status)
     self.unsatisfiedReason = .init(rawValue: rawValue.unsatisfiedReason)
   }
 }
 
 extension ComposableNetworkMonitor.Path.Status {
-  public init(rawValue: NWPath.Status) {
+  init(rawValue: NWPath.Status) {
     switch rawValue {
     case .satisfied: self = .satisfied
     case .unsatisfied: self = .unsatisfied
@@ -54,7 +53,7 @@ extension ComposableNetworkMonitor.Path.Status {
 }
 
 extension ComposableNetworkMonitor.Path.UnsatisfiedReason {
-  public init(rawValue: NWPath.UnsatisfiedReason) {
+  init(rawValue: NWPath.UnsatisfiedReason) {
     switch rawValue {
     case .notAvailable: self = .notAvailable
     case .cellularDenied: self = .cellularDenied

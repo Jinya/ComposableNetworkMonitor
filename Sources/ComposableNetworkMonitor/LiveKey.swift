@@ -4,7 +4,7 @@ import Network
 import Combine
 
 extension ComposableNetworkMonitor: DependencyKey {
-  static let liveValue: Self = {
+  public static let liveValue: Self = {
     let monitor = NWPathMonitor(requiredInterfaceType: .loopback)
     monitor.start(queue: DispatchQueue(label: "\(Self.self)"))
     let subject = CurrentValueSubject<Self.Path, Never>(.init(rawValue: monitor.currentPath))
